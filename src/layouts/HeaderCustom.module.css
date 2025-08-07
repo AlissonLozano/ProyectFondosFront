@@ -1,0 +1,35 @@
+.containerHeader {
+  width: 100%;
+  height: 150px;
+  background-color: black;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.containerImage {
+  width: 200px;
+  height: 100%;
+}
+
+.containerSeccion {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  align-items: center;
+  justify-items: center;
+  color: white;
+}
+
+.containerUser {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.labelUser {
+  width: 100px;
+  padding: 1rem;
+  color: white;
+  border-radius: 9999px;
+  background-color: #3b82f6;
+  text-align: center;
+}
