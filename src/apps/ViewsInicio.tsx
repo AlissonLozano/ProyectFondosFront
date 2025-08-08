@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import classes from "./ViewsInicio.module.css";
 import { ListRoutesModule } from "../routes/subRoutes";
-import { Suspense } from "react";
 
 const ViewsInicio = () => {
   return (

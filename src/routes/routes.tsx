@@ -1,6 +1,7 @@
 import { lazy } from "react";
 const ViewsInicio = lazy(() => import("../apps/ViewsInicio"));
 const ViewsMovimientos = lazy(() => import("../apps/ViewsMovimientos"));
+const ViewsFondos = lazy(() => import("../apps/ViewsFondos"));
 
 export const ListRoutes = [
   {
@@ -25,7 +26,7 @@ export const ListRoutes = [
   },
   {
     link: "/administracion-fondos",
-    component: ViewsMovimientos,
+    component: ViewsFondos,
     label: "ADMINISTRACIÓN FONDOS",
     logo: (
       <img
