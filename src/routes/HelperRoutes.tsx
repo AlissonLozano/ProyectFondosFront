@@ -24,8 +24,6 @@ const toRoutes = (ListRoutes: Array<TypingRoutes>) => {
   return routes;
 };
 
-const HelperRoutes = () => {
+export const RoutesLink = () => {
   return <Routes>{toRoutes(ListRoutes)}</Routes>;
 };
-
-export default HelperRoutes;

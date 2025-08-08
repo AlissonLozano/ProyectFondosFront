@@ -1,13 +1,13 @@
 import { BrowserRouter } from "react-router-dom";
-import HelperRoutes from "./routes/HelperRoutes";
 import HeaderCustom from "./layouts/HeaderCustom";
+import { RoutesLink } from "./routes/HelperRoutes";
 
 function App() {
   return (
     <>
       <BrowserRouter>
         <HeaderCustom></HeaderCustom>
-        <HelperRoutes></HelperRoutes>
+        <RoutesLink></RoutesLink>
       </BrowserRouter>
     </>
   );

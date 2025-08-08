@@ -1,6 +1,3 @@
-import { useLocation } from "react-router-dom";
-
-//FRAGMENT ********************* CSS *********************************
 import classes from "./HeaderCustom.module.css";
 
 const HeaderCustom = () => {

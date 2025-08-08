@@ -1,0 +1,114 @@
+.containerUser {
+  width: 100%;
+  height: 200px;
+  background: rgb(0, 0, 0);
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  /* border-right: 4px solid blue;
+  border-bottom: 4px solid blue; */
+  /* border-bottom-right-radius: 50%;
+  position: relative;
+  width: 100%;
+  height: 200px;
+  background-color: #000000; /* Azul oscuro */
+  /* clip-path: path("M0,40 C100,120 400,0 500,50 L500,0 L0,0 Z"); */
+}
+
+/* .containerUser::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  border-bottom: 5px solid #3b5bd8;
+  border-right: 5px solid #3b5bd8;
+  border-bottom-right-radius: 50%;
+  pointer-events: none;
+} */
+
+/* .containerUser::before {
+  content: "";
+  position: absolute;
+  top: -4px;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background-color: transparent;
+  border-top: 4px solid orange;
+  clip-path: path("M0,40 C100,120 400,0 500,50 L500,0 L0,0 Z");
+} */
+
+.containerRigth {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.containerLeft {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.divTarjeta {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: aqua;
+  border-radius: 30px;
+}
+
+.imgCustom {
+  border-radius: 30px;
+  width: 200px;
+}
+
+.containerSeccionFather {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+}
+.containerSeccion {
+  width: 100%;
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  max-width: calc(230px * 3 + 20px * 2);
+}
+.seccionInd {
+  height: 100%;
+  background: white;
+  color: #333;
+  border: 1px solid #ddd;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.seccionInd:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  border-color: #999;
+}
+
+.seccionInd > label {
+  font-weight: bold;
+  text-align: center;
+}
+
+.seccionInd > p {
+  font-size: small;
+}
