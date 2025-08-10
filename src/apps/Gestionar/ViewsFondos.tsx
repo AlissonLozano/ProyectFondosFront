@@ -6,48 +6,6 @@ import fetchApp from "../../utils/fetchApp";
 import { toastContentError } from "../../utils/toastContent";
 import { formatMoney } from "../../components/InputsCustom/InputCustomMoney";
 
-const productos = [
-  {
-    id: 1,
-    nombre: "dddddddd",
-    monto_minimo: 1000,
-    categoria: "gggg",
-  },
-  {
-    id: 2,
-    nombre: "dddddddd",
-    monto_minimo: 1000,
-    categoria: "gggg",
-  },
-  {
-    id: 3,
-    nombre: "dddddddd",
-    monto_minimo: 1000,
-    categoria: "gggg",
-  },
-];
-
-const productosNuevos = [
-  {
-    id: 1,
-    nombre: "dddddddd",
-    monto_minimo: 1000,
-    categoria: "gggg",
-  },
-  {
-    id: 2,
-    nombre: "dddddddd",
-    monto_minimo: 1000,
-    categoria: "gggg",
-  },
-  {
-    id: 3,
-    nombre: "dddddddd",
-    monto_minimo: 1000,
-    categoria: "gggg",
-  },
-];
-
 export type TypeProduct = "activos" | "disponibles";
 export type TypeProductos = {
   categoria: string;
