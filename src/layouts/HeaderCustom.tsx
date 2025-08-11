@@ -1,14 +1,21 @@
 import { useEffect, useState } from "react";
 import { useContextUser } from "../context/useContextUser";
 import classes from "./HeaderCustom.module.css";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const opciones = ["Inicio", "Fondos", "Movimientos"];
 
 const HeaderCustom = () => {
   const user = useContextUser();
   const helperNavigate = useNavigate();
+  const location = useLocation();
   const [activo, setActivo] = useState("Inicio");
+
+  useEffect(() => {
+    if (location.pathname === "/administracion-fondos") setActivo("Fondos");
+    if (location.pathname === "/movimientos") setActivo("Movimientos");
+    if (location.pathname === "/") setActivo("Inicio");
+  }, [location.pathname]);
 
   return (
     <div>
@@ -26,7 +33,6 @@ const HeaderCustom = () => {
             <button
               key={item}
               onClick={() => {
-                setActivo(item);
                 switch (item) {
                   case "Inicio":
                     helperNavigate("../");
