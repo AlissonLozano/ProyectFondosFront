@@ -1,6 +1,8 @@
+import { useContextUser } from "../context/useContextUser";
 import classes from "./HeaderCustom.module.css";
 
 const HeaderCustom = () => {
+  const user = useContextUser();
   return (
     <div className={classes.containerHeader}>
       <div className={classes.containerImage}>
@@ -19,7 +21,7 @@ const HeaderCustom = () => {
         <label>Movimientos</label>
       </div>
       <div className={classes.containerUser}>
-        <label className={classes.labelUser}>Alisson</label>
+        <label className={classes.labelUser}>{user.name}</label>
       </div>
     </div>
   );
