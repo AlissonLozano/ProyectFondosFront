@@ -1,7 +1,10 @@
 import { lazy } from "react";
-const ViewsInicio = lazy(() => import("../apps/ViewsInicio"));
-const ViewsMovimientos = lazy(() => import("../apps/ViewsMovimientos"));
-const ViewsFondos = lazy(() => import("../apps/ViewsFondos"));
+
+const ViewsInicio = lazy(() => import("../apps/Inicio/ViewsInicio"));
+const ViewsMovimientos = lazy(
+  () => import("../apps/Movimientos/ViewsMovimientos")
+);
+const ViewsFondos = lazy(() => import("../apps/Gestionar/ViewsFondos"));
 
 export const ListRoutes = [
   {
