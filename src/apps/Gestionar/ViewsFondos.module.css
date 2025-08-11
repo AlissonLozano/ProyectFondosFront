@@ -51,3 +51,11 @@
 .productInd_button_new {
   background-color: rgb(76, 146, 97);
 }
+
+.buttonCancelar {
+  background-color: rgb(201, 201, 201);
+}
+
+.buttonAceptar {
+  background-color: #60779b;
+}

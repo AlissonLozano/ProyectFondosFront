@@ -1,19 +1,13 @@
 /* eslint @typescript-eslint/no-explicit-any: "off" */
 import { useCallback, useEffect, useState } from "react";
-import classes from "./ViewsFondos.module.css";
 import { useContextUser } from "../../context/useContextUser";
 import fetchApp from "../../utils/fetchApp";
 import { toastContentError } from "../../utils/toastContent";
-import { formatMoney } from "../../components/InputsCustom/InputCustomMoney";
+import type { TypeProductos } from "./utils";
+import ProductosActivos from "./components/ProductosActivos";
+import ProductosDisponibles from "./components/ProductosDisponibles";
 
 export type TypeProduct = "activos" | "disponibles";
-export type TypeProductos = {
-  categoria: string;
-  id: number;
-  nombre: string;
-  valor: number;
-};
-
 export type TypeResultProductos = {
   productos: TypeProductos[];
   page_next: boolean;
@@ -43,7 +37,7 @@ const ViewsFondos = () => {
       const productos = productos_backend.map(
         (prod: { [key: string]: string | number }) => ({
           categoria: prod?.Categoria,
-          id: Number(prod?.id),
+          id_producto: Number(prod?.id),
           nombre: prod?.Nombre,
           valor:
             tipo == "activos" ? prod?.valor : prod?.Monto_minimo_vinculacion,
@@ -84,50 +78,11 @@ const ViewsFondos = () => {
   return (
     <div>
       <label>Administar Fondos</label>
-      <div className={classes.containerProductFather}>
-        <div className={classes.containerProduct}>
-          {productosActivos.map(
-            ({ id, nombre, valor, categoria }: TypeProductos) => {
-              return (
-                <div className={classes.productInd} key={id}>
-                  <label className={classes.labelCategory}>
-                    <strong>{categoria}</strong>
-                  </label>
-                  <label className={classes.productInd_label}>{nombre}</label>
-                  <label>{`COP ${formatMoney.format(valor)}`}</label>
-                  <button className={classes.productInd_button_cancel}>
-                    Anular Suscripción
-                  </button>
-                </div>
-              );
-            }
-          )}
-        </div>
-      </div>
+      <ProductosActivos productosActivos={productosActivos}></ProductosActivos>
       <br></br>
-      <div className={classes.containerProductFather}>
-        <div className={classes.containerProduct}>
-          {productosDisponibles.map(
-            ({ id, nombre, valor, categoria }: TypeProductos) => {
-              return (
-                <div className={classes.productInd} key={id}>
-                  <label className={classes.labelCategory}>
-                    <strong>{categoria}</strong>
-                  </label>
-                  <label className={classes.productInd_label}>{nombre}</label>
-                  <label className={classes.productInd_label}>
-                    Monto minimo de vinculación
-                  </label>
-                  <label>{`COP ${formatMoney.format(valor)}`}</label>
-                  <button className={classes.productInd_button_new}>
-                    Suscribirse
-                  </button>
-                </div>
-              );
-            }
-          )}
-        </div>
-      </div>
+      <ProductosDisponibles
+        productosDisponibles={productosDisponibles}
+      ></ProductosDisponibles>
     </div>
   );
 };
