@@ -46,16 +46,54 @@
 
 .productInd_button_cancel {
   background-color: rgb(194, 90, 86);
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+.productInd_button_cancel:hover {
+  border: 6px solid #dba3a3;
 }
 
 .productInd_button_new {
   background-color: rgb(76, 146, 97);
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+.productInd_button_new:hover {
+  border: 6px solid #addaac;
 }
 
 .buttonCancelar {
   background-color: rgb(201, 201, 201);
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 0.25s;
 }
 
 .buttonAceptar {
   background-color: #60779b;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 0.25s;
 }
