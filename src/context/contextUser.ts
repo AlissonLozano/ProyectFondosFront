@@ -7,7 +7,7 @@ export interface TypingContextUser {
 }
 
 export const ContextUser = createContext<TypingContextUser>({
-  id_user: 1,
-  name: "Alisson Garay",
+  id_user: 0,
+  name: "",
   cuenta: "",
 });
