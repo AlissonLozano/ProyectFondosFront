@@ -6,14 +6,6 @@
   grid-template-columns: 1fr 1fr 1fr;
 }
 
-.containerSeccion {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-  align-items: center;
-  justify-items: center;
-  color: white;
-}
-
 .containerUser {
   display: flex;
   justify-content: center;
