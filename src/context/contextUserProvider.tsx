@@ -6,8 +6,7 @@ export const ContextAppProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [branding] = useState<TypingContextUser>({
     id_user: import.meta.env.VITE_APP_USER_ID,
-    name: import.meta.env.VITE_APP_USER_NAME,
-    cuenta: import.meta.env.VITE_APP_USER_CUENTA,
+    name: import.meta.env.VITE_APP_USER_NAME
   });
 
   return (

@@ -77,7 +77,6 @@ const ViewsFondos = () => {
 
   return (
     <div>
-      <label>Administar Fondos</label>
       <ProductosActivos productosActivos={productosActivos}></ProductosActivos>
       <br></br>
       <ProductosDisponibles
