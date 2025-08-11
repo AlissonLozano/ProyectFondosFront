@@ -6,11 +6,6 @@
   grid-template-columns: 1fr 1fr 1fr;
 }
 
-.containerImage {
-  width: 200px;
-  height: 100%;
-}
-
 .containerSeccion {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
@@ -26,7 +21,6 @@
 }
 
 .labelUser {
-  width: 100px;
   padding: 1rem;
   color: white;
   border-radius: 9999px;
