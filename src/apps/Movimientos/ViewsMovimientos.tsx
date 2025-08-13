@@ -7,6 +7,7 @@ import { formatMoney } from "../../components/InputsCustom/InputCustomMoney";
 
 export type TypeMovimientoInd = {
   id_movimiento: number;
+  descripcion: string;
   producto: {
     id: number;
     nombre: string;
@@ -62,6 +63,7 @@ const ViewsMovimientos = () => {
           <thead className="bg-gray-900 text-gray-100 uppercase text-xs">
             <tr>
               <th className="px-6 py-3">ID</th>
+              <th className="px-6 py-3">Descripción</th>
               <th className="px-6 py-3">Valor</th>
               <th className="px-6 py-3">Fecha</th>
               <th className="px-6 py-3">Nombre</th>
@@ -75,6 +77,7 @@ const ViewsMovimientos = () => {
                 className="bg-gray-800 border-b border-gray-700 hover:bg-gray-700 transition"
               >
                 <td className="px-6 py-4">{row.id_movimiento}</td>
+                <td className="px-6 py-4">{row.descripcion}</td>
                 <td className="px-6 py-4">{formatMoney.format(row.valor)}</td>
                 <td className="px-6 py-4">{row.fecha}</td>
                 <td className="px-6 py-4">{row.producto.nombre}</td>
