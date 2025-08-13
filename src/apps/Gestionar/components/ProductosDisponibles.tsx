@@ -149,6 +149,8 @@ const ProductosDisponibles = ({
                   <button
                     className={classes.productInd_button_new}
                     onClick={() => {
+                      setNotificacionInput("");
+                      setValorInput(0);
                       setShowWindow(true);
                       setProductoElegido({
                         id_producto,
@@ -171,6 +173,8 @@ const ProductosDisponibles = ({
         <WindowCustom
           show={showWindow}
           handleClose={() => {
+            setNotificacionInput("");
+            setValorInput(0);
             setShowWindow(false);
             if (paso == "aprobada") helperNavigate("../");
           }}
@@ -179,7 +183,7 @@ const ProductosDisponibles = ({
             {paso == "resumen" && (
               <div className="grid grid-flow-row auto-rows-max gap-4 place-items-center text-center">
                 <h2 className="text-2xl font-semibold">
-                  ¿Esta seguro que quiere cancelar su suscripción?
+                  ¿Esta seguro que quiere suscripbirse?
                 </h2>
                 <h2 className="grid grid-flow-col auto-cols-fr gap-6">
                   <strong className="justify-self-end">Nombre:</strong>
@@ -248,7 +252,11 @@ const ProductosDisponibles = ({
                   </button>
                   <button
                     className={classes.buttonCancelar}
-                    onClick={() => setShowWindow(false)}
+                    onClick={() => {
+                      setNotificacionInput("");
+                      setValorInput(0);
+                      setShowWindow(false);
+                    }}
                   >
                     Cancelar
                   </button>
