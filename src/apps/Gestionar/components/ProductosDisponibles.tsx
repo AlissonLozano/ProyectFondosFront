@@ -1,4 +1,11 @@
-import { Fragment, useCallback, useState } from "react";
+import {
+  Fragment,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type MouseEvent,
+} from "react";
 import classes from "../ViewsFondos.module.css";
 import { formatMoney } from "../../../components/InputsCustom/InputCustomMoney";
 import { useContextUser } from "../../../context/useContextUser";
@@ -21,14 +28,16 @@ export type TypeResultSuscribirse = {
 const PeticionSuscribirse = async (
   id_user: number,
   id_producto: number,
-  valor: number
+  valor: number,
+  notificacion: string
 ): Promise<TypeResultSuscribirse> => {
   const url = import.meta.env.VITE_APP_URL_GESTIONAR;
-  const body = {
+  const body: { [key: string]: unknown } = {
     id_user,
     id_producto,
     valor,
   };
+  if (notificacion.trim() !== "") body.notificacion = notificacion;
 
   const response = await fetchApp(url, "POST", {}, body);
   const status = response?.status ?? false;
@@ -51,39 +60,78 @@ const ProductosDisponibles = ({
     null
   );
   const [idMovimiento, setIdMovimiento] = useState<number | null>(null);
+  const [valorInput, setValorInput] = useState<number>(0);
+  const [notificacionInput, setNotificacionInput] = useState<string>("");
+  const [loanding, setLoanding] = useState<boolean>(false);
 
-  const onClickAceptar = useCallback(() => {
-    if (!productoElegido) return;
-    toastContentPending(
-      PeticionSuscribirse(
-        user.id_user,
-        productoElegido?.id_producto,
-        productoElegido?.valor
-      ),
-      {
-        render: () => {
-          return "Procesando";
+  const inptRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    if (inptRef.current)
+      inptRef.current.setCustomValidity("Completa este campoooooooooo");
+  }, []);
+
+  const onSubmitAceptar = useCallback(
+    (ev: MouseEvent<HTMLFormElement>) => {
+      ev.preventDefault();
+      if (!inptRef.current) return;
+
+      inptRef.current.setCustomValidity("debe ser mayor o igual COP");
+      inptRef.current.reportValidity();
+      if (!productoElegido) return;
+
+      if (valorInput < productoElegido.valor) {
+        inptRef.current.setCustomValidity(
+          `debe ser mayor o igual COP ${formatMoney.format(
+            productoElegido.valor
+          )}`
+        );
+        return;
+      } else inptRef.current.setCustomValidity("");
+
+      if (!productoElegido) return;
+      toastContentPending(
+        PeticionSuscribirse(
+          user.id_user,
+          productoElegido?.id_producto,
+          valorInput,
+          notificacionInput
+        ),
+        {
+          render: () => {
+            setLoanding(true);
+            return "Procesando";
+          },
         },
-      },
-      {
-        render: ({ data }) => {
-          setIdMovimiento(data.id_movimiento);
-          setPaso("aprobada");
-          return "Transacción Aprobada";
+        {
+          render: ({ data }) => {
+            setIdMovimiento(data.id_movimiento);
+            setPaso("aprobada");
+            setLoanding(false);
+            return "Transacción Aprobada";
+          },
         },
-      },
-      {
-        render: ({ data: error }) => {
-          setPaso("ninguno");
-          setShowWindow(false);
-          return error?.message ?? "Transacción Rechazada";
-        },
-      }
-    );
-  }, [productoElegido, user.id_user]);
+        {
+          render: ({ data: error }) => {
+            setPaso("ninguno");
+            setShowWindow(false);
+            setLoanding(false);
+            return error?.message ?? "Transacción Rechazada";
+          },
+        }
+      );
+    },
+    [productoElegido, user.id_user, valorInput, notificacionInput]
+  );
 
   return (
     <Fragment>
+      {loanding && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20">
+          <div className="animate-spin rounded-full h-16 w-16 border-4 border-b-black border-t-transparent"></div>
+        </div>
+      )}
+
       <div className={classes.containerProductFather}>
         <div className={classes.containerProduct}>
           {productosDisponibles.map(
@@ -127,45 +175,87 @@ const ProductosDisponibles = ({
             if (paso == "aprobada") helperNavigate("../");
           }}
         >
-          {paso == "resumen" && (
-            <div className="grid grid-flow-row auto-rows-max gap-4 place-items-center text-center">
-              <h2 className="text-2xl font-semibold">
-                ¿Esta seguro que quiere cancelar su suscripción?
-              </h2>
-              <h2 className="grid grid-flow-col auto-cols-fr gap-6">
-                <strong className="justify-self-end">Nombre:</strong>
-                <p className="justify-self-start whitespace-pre-wrap break-all">
-                  {productoElegido.nombre}
-                </p>
-              </h2>
-              <h2 className="grid grid-flow-col auto-cols-fr gap-6">
-                <strong className="justify-self-end">Categoria:</strong>
-                <p className="justify-self-start whitespace-pre-wrap break-all">
-                  {productoElegido.categoria}
-                </p>
-              </h2>
-              <h2 className="grid grid-flow-col auto-cols-fr gap-6">
-                <strong className="justify-self-end">Valor Actual:</strong>
-                <p className="justify-self-start whitespace-pre-wrap break-all">
-                  {`COP ${formatMoney.format(productoElegido.valor)}`}
-                </p>
-              </h2>
-              <div className="flex gap-7">
-                <button
-                  className={classes.buttonAceptar}
-                  onClick={onClickAceptar}
-                >
-                  Aceptar
-                </button>
-                <button
-                  className={classes.buttonCancelar}
-                  onClick={() => setShowWindow(false)}
-                >
-                  Cancelar
-                </button>
+          <form onSubmit={onSubmitAceptar}>
+            {paso == "resumen" && (
+              <div className="grid grid-flow-row auto-rows-max gap-4 place-items-center text-center">
+                <h2 className="text-2xl font-semibold">
+                  ¿Esta seguro que quiere cancelar su suscripción?
+                </h2>
+                <h2 className="grid grid-flow-col auto-cols-fr gap-6">
+                  <strong className="justify-self-end">Nombre:</strong>
+                  <p className="justify-self-start whitespace-pre-wrap break-all">
+                    {productoElegido.nombre}
+                  </p>
+                </h2>
+                <h2 className="grid grid-flow-col auto-cols-fr gap-6">
+                  <strong className="justify-self-end">Categoria:</strong>
+                  <p className="justify-self-start whitespace-pre-wrap break-all">
+                    {productoElegido.categoria}
+                  </p>
+                </h2>
+                <h2 className="grid grid-flow-col auto-cols-fr gap-6">
+                  <strong className="justify-self-end">Valor Minimo:</strong>
+                  <p className="justify-self-start whitespace-pre-wrap break-all">
+                    {`COP ${formatMoney.format(productoElegido.valor)}`}
+                  </p>
+                </h2>
+                <div className="space-y-2">
+                  <label
+                    htmlFor="valor"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Ingrese valor
+                  </label>
+                  <input
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700 placeholder-gray-400"
+                    type="text"
+                    placeholder="COP $ 0"
+                    required
+                    ref={inptRef}
+                    value={`COP ${formatMoney.format(valorInput)}`}
+                    onChange={(ev) => {
+                      ev.target.setCustomValidity("");
+                      setValorInput(
+                        Number(ev.target.value.replace(/[^0-9]/g, ""))
+                      );
+                    }}
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label
+                    htmlFor="opcion"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Seleccione a donde se enviara tu notificación
+                  </label>
+                  <select
+                    id="opcion"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700 placeholder-gray-400"
+                    onChange={(ev) => {
+                      setNotificacionInput(ev.target.value);
+                    }}
+                  >
+                    <option value=""></option>
+                    <option value="email">Correo</option>
+                    <option value="celular">Celular</option>
+                  </select>
+                </div>
+
+                <div className="flex gap-7 m-4">
+                  <button className={classes.buttonAceptar} type={"submit"}>
+                    Aceptar
+                  </button>
+                  <button
+                    className={classes.buttonCancelar}
+                    onClick={() => setShowWindow(false)}
+                  >
+                    Cancelar
+                  </button>
+                </div>
               </div>
-            </div>
-          )}
+            )}
+          </form>
           {paso == "aprobada" && (
             <div className="grid grid-flow-row auto-rows-max gap-4 place-items-center text-center">
               <h2 className="text-2xl font-semibold">Transacción Aprobada</h2>
