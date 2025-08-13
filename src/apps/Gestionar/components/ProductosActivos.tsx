@@ -48,6 +48,7 @@ const ProductosActivos = ({ productosActivos }: PropsProductosActivos) => {
     null
   );
   const [idMovimiento, setIdMovimiento] = useState<number | null>(null);
+  const [loanding, setLoanding] = useState<boolean>(false);
 
   const onClickAceptar = useCallback(() => {
     if (!productoElegido) return;
@@ -55,6 +56,7 @@ const ProductosActivos = ({ productosActivos }: PropsProductosActivos) => {
       PeticionCancelar(user.id_user, productoElegido?.id_producto),
       {
         render: () => {
+          setLoanding(true);
           return "Procesando";
         },
       },
@@ -62,6 +64,7 @@ const ProductosActivos = ({ productosActivos }: PropsProductosActivos) => {
         render: ({ data }) => {
           setIdMovimiento(data.id_movimiento);
           setPaso("aprobada");
+          setLoanding(false);
           return "Transacción Aprobada";
         },
       },
@@ -69,6 +72,7 @@ const ProductosActivos = ({ productosActivos }: PropsProductosActivos) => {
         render: ({ data: error }) => {
           setPaso("ninguno");
           setShowWindow(false);
+          setLoanding(false);
           return error?.message ?? "Transacción Rechazada";
         },
       }
@@ -77,6 +81,12 @@ const ProductosActivos = ({ productosActivos }: PropsProductosActivos) => {
 
   return (
     <Fragment>
+      {loanding && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20">
+          <div className="animate-spin rounded-full h-16 w-16 border-4 border-b-black border-t-transparent"></div>
+        </div>
+      )}
+
       <div className={classes.containerProductFather}>
         <div className={classes.containerProduct}>
           {productosActivos.map(
